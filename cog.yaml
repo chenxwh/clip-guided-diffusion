@@ -1,0 +1,23 @@
+predict: "predict.py:Predictor"
+build:
+  gpu: true
+  python_version: "3.8"
+  system_packages:
+    - "libgl1-mesa-glx"
+    - "libglib2.0-0"
+  python_packages:
+    - "numpy==1.21.1"
+    - "Pillow==8.2.0"
+    - "ipython==7.21.0"
+    - "torchvision==0.9.0"
+    - "torch==1.8.0"
+  pre_install:
+    - git clone https://github.com/openai/CLIP
+    - git clone https://github.com/crowsonkb/guided-diffusion
+    - pip install -e ./CLIP
+    - pip install -e ./guided-diffusion
+
+
+
+
+
