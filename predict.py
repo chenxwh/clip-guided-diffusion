@@ -17,7 +17,6 @@ class Predictor(cog.Predictor):
 
     @cog.input("prompt", type=str, help="Text prompt")
     @cog.input("timesteps", type=int, help="Number of timesteps", default=1000)
-    @cog.input("display_freq", type=int, default=50, help="Display frequency")
     def predict(self, prompt, timesteps=1000):
 
         self.model_config.update({
