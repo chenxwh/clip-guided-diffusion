@@ -161,7 +161,8 @@ class Predictor(cog.Predictor):
 @torch.no_grad()
 def checkin(j, k, image, out_path):
     if j is not None:
-        sys.stderr.write(f'step: {j}, output: {k}\n')
+        sys.stderr.write('\n')
+        sys.stderr.write(f' ****Progressive output, step: {j}, output: {k}***\n')
     TF.to_pil_image(image.add(1).div(2).clamp(0, 1)).save(str(out_path))
     return out_path
 
