@@ -41,7 +41,7 @@ class Predictor(cog.Predictor):
 
     @cog.input("prompt", default='alien friend by Odilon Redon', type=str, help="Text prompt")
     @cog.input("timesteps", type=int, help="Number of timesteps", default=1000)
-    @cog.input("display_frequency", type=int, help="display frequency", default=100)
+    @cog.input("display_frequency", type=int, help="display frequency", default=10)
     def predict(self, prompt='alien friend by Odilon Redon', timesteps=1000, display_frequency=10):
         assert isinstance(timesteps, int) and timesteps > 0, 'timesteps is a positive integer'
         assert isinstance(display_frequency, int) and display_frequency > 0, 'display_frequency is a positive integer'
