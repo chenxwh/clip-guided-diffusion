@@ -1,8 +1,8 @@
 import sys
+from typing import Iterator
 import gc
 import io
 import tempfile
-from pathlib import Path
 import requests
 from PIL import Image
 import lpips
@@ -11,7 +11,7 @@ from torch import nn
 from torch.nn import functional as F
 from torchvision import transforms
 from torchvision.transforms import functional as TF
-import cog
+from cog import BasePredictor, Input, Path
 import clip
 from guided_diffusion.script_util import (
     create_model_and_diffusion,
@@ -19,7 +19,7 @@ from guided_diffusion.script_util import (
 )
 
 
-class Predictor(cog.Predictor):
+class Predictor(BasePredictor):
     def setup(self):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.model_config = model_and_diffusion_defaults()
@@ -49,17 +49,14 @@ class Predictor(cog.Predictor):
         )
         self.clip_size = self.clip_model.visual.input_resolution
 
-    @cog.input(
-        "prompt", default="alien friend by Odilon Redon", type=str, help="Text prompt"
-    )
-    @cog.input("timesteps", type=int, help="Number of timesteps", default=1000)
-    @cog.input("display_frequency", type=int, help="display frequency", default=10)
     def predict(
         self,
-        prompt="alien friend by Odilon Redon",
-        timesteps=1000,
-        display_frequency=10,
-    ):
+        prompt: str = Input(
+            default="alien friend by Odilon Redon", description="Text prompt"
+        ),
+        timesteps: int = Input(default=1000, description="Number of timesteps"),
+        display_frequency: int = Input(default=10, description="Display frequency"),
+    ) -> Iterator[Path]:
         assert (
             isinstance(timesteps, int) and timesteps > 0
         ), "timesteps is a positive integer"
