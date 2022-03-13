@@ -18,3 +18,4 @@ build:
     - pip install -e ./guided-diffusion
 
 predict: "predict.py:Predictor"
+image: "r8.im/cjwbw/clip-guided-diffusion"
